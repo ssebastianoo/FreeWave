@@ -1,0 +1,4 @@
+flask
+flask-socketio
+pafy
+youtube-search-python
