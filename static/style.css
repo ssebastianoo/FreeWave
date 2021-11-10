@@ -1,0 +1,31 @@
+body {
+    background: #1e272e;
+    color: white;
+    font-family: 'DM Sans', sans-serif;
+}
+
+.container {
+    text-align: center;
+}
+
+.inputs {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+input, button {
+    font-family: 'DM Sans', sans-serif;
+}
+
+#controller {
+    margin-top: 10px;
+}
+
+#queue {
+    color: #b1b3b1;
+}
+
+.playing {
+    color: white;
+    font-size: 110%;
+}

@@ -1,4 +1,4 @@
-import youtubesearchpython, pafy, flask_socketio
+import youtubesearchpython, pafy, flask_socketio, config
 from flask import Flask, render_template, redirect
 
 app = Flask(__name__)
@@ -11,9 +11,9 @@ def index():
 
 @socketio.on('search')
 def play(song_query):
-    url = youtubesearchpython.VideosSearch(song_query, limit=1).result()['result'][0]['link']
-    song = pafy.new(url)
-    flask_socketio.emit('queryResult', song.getbestaudio().url)
+    song_info = youtubesearchpython.VideosSearch(song_query, limit=1).result()['result'][0]
+    song = pafy.new(song_info['link'])
+    flask_socketio.emit('queryResult', {'url': song.getbestaudio().url, 'info': song_info})
 
 if __name__ == '__main__':
-    socketio.run(app, debug=True, host='0.0.0.0', port=8888)
+    socketio.run(app, debug=config.debug, host='0.0.0.0', port=config.port)
