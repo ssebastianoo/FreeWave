@@ -5,6 +5,9 @@ let queueDiv = document.getElementById('queue');
 let controller = document.getElementById('controller');
 let socket = io.connect();
 let cookieID;
+let playPauseEl = document.getElementById('play-pause');
+let query = document.getElementById('query');
+let loading = document.getElementById('loading');
 
 function setCookie(cname, cvalue, exdays) {
     const d = new Date();
@@ -36,7 +39,14 @@ window.onload = function() {
     } else {
         cookieID = Date.now();
         document.cookie = setCookie('cookieID', cookieID, 365);
-    }
+    };
+
+    document.addEventListener('keyup', function(event) {
+        if (event.code === 'Enter' | event.keyCode === 13) {
+            event.preventDefault();
+            search();
+        }
+    });
 }
 
 function updateCookie() {
@@ -59,6 +69,7 @@ function updateCookie() {
 
 function search() {
     socket.emit('search', query.value);
+    loading.style.display = 'unset';
 };
 
 function queueManager() {
@@ -73,6 +84,7 @@ function queueManager() {
     };
 };
 setInterval(queueManager, 1000);
+setInterval(updateCookie, 5000);
 
 function play(song) {
     if (nowPlaying) {
@@ -93,9 +105,13 @@ function playPause() {
         if (nowPlaying.audio.paused) {
             nowPlaying.audio.play();
             nowPlaying.element.classList.add('playing');
+            playPauseEl.classList.add('fa-paused');
+            playPauseEl.classList.remove('fa-play');
         } else {
             nowPlaying.audio.pause();
             nowPlaying.element.classList.remove('playing');
+            playPauseEl.classList.remove('fa-paused');
+            playPauseEl.classList.add('fa-play');
         };
     };
 };
@@ -148,6 +164,7 @@ socket.on('cookie', function (cookie) {
 })
 
 socket.on('queryResult', function (data) {
+    loading.style.display = 'none';
     let li = document.createElement('li');
     li.innerText = data.info.title;
     queueDiv.appendChild(li);
@@ -162,4 +179,5 @@ socket.on('queryResult', function (data) {
         play(queue[queueNumber]); 
     };
     updateCookie();
+    query.value = '';
 })

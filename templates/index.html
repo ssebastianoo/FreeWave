@@ -1,27 +1,26 @@
 <!DOCTYPE html>
-<html lang='en'>
-    <head>
+<html lang="en"><head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Music Player</title>
-        <link rel="stylesheet" href="{{url_for('static', filename='style.css')}}">
-        <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@500&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="/static/style.css">
+        <link href="https://fonts.googleapis.com/css2?family=Ubuntu+Mono&display=swap" rel="stylesheet"> 
+        <script src="https://kit.fontawesome.com/2cd6389f66.js" crossorigin="anonymous"></script>
     </head>
     <body>
+        <div id='loading' style='display:none'>
+            <img src="https://cdn.discordapp.com/attachments/636316942445051914/909057605752717332/34338d26023e5515f6cc8969aa027bca_w200.gif" alt="loading">
+        </div>
+        <div id="controller"></div>
+        <div class='top-space'></div>
         <div class="container">
             <h1>Free Wave</h1>
-            <div class="inputs">
-                <input type="text" placeholder="search a song" id="query">
-                <input type="submit" onclick="search()">
-            </div>  
-            <div id="song">
-                <div id="song-controls">
-                    <button id="play-pause" onclick="playPause()">Play</button>
-                    <button id="prev" onclick="moveTrack('prev')">Prev</button>
-                    <button id="next" onclick="moveTrack('next')">Next</button>
-                </div>
-                <div id="controller"></div>
+            <div class="song-controls">
+                <i class="fas fa-backward" onclick="moveTrack('prev')"></i>
+                <i class="fas fa-pause" id='play-pause' onclick="playPause()"></i>
+                <i class="fas fa-forward" onclick="moveTrack('next')"></i>
             </div>
+            <input class="song-search" type="text" placeholder="search a song" id="query">
             <ul id="queue"></ul>
         </div>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.2.0/socket.io.js" integrity="sha512-WL6WGKMPBiM9PnHRYIn5YEtq0Z8XP4fkVb4qy7PP4vhmYQErJ/dySyXuFIMDf1eEYCXCrQrMJfkNwKc9gsjTjA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>

@@ -1,31 +1,77 @@
+:root {
+    --background-color: #0d0d0d;
+    --secondary-bg-color: #1c1c1c;
+    --third-bg-color: #292929;
+}
+
 body {
-    background: #1e272e;
+    background: var(--background-color);
     color: white;
-    font-family: 'DM Sans', sans-serif;
+    font-family: 'Ubuntu Mono', monospace;
+}
+
+#controller audio {
+    position: fixed;
+    width: 99%;
+    margin: 0;
+}
+
+.top-space {
+    height: 40px;
 }
 
 .container {
     text-align: center;
 }
 
-.inputs {
-    margin-top: 20px;
-    margin-bottom: 20px;
+.song-search {
+    margin-bottom: 10px;
+    width: 50%;
+    outline: none;
+    color: white;
+    border: none;
+    background: var(--secondary-bg-color);
+    box-shadow: 5px 5px var(--third-bg-color);
+    border-radius: 5px;
+    padding-left: 15px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    font-size: 25px;
+}
+
+.song-controls {
+    margin-bottom: 25px;
+    font-size: 110%;
+}
+
+.song-controls i {
+    margin-left: 10px;
+    margin-right: 10px;
+    transition-duration: .5s;
+}
+
+.song-controls i:hover {
+    cursor: pointer;
+    rotate: 360deg;
 }
 
 input, button {
-    font-family: 'DM Sans', sans-serif;
-}
-
-#controller {
-    margin-top: 10px;
+    font-family: 'Ubuntu Mono', monospace;
 }
 
 #queue {
     color: #b1b3b1;
+    font-size: 120%;
 }
 
 .playing {
     color: white;
     font-size: 110%;
+}
+
+#loading {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
