@@ -18,7 +18,11 @@ def index():
 
 @socketio.on('search')
 def play(song_query):
-    song_info = youtubesearchpython.VideosSearch(song_query, limit=1).result()['result'][0]
+    try:
+        song_info = youtubesearchpython.VideosSearch(song_query, limit=1).result()['result'][0]
+    except IndexError:
+        return flask_socketio.emit('notFound', song_query) 
+
     song = ytdl.extract_info(song_info['link'], download=False)
     flask_socketio.emit('queryResult', {'url': song['formats'][0]['url'], 'info': song_info})
 

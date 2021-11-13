@@ -64,6 +64,11 @@ input, button {
     font-size: 120%;
 }
 
+#queue a {
+    color: unset;
+    text-decoration: none;
+}
+
 .playing {
     color: white;
     font-size: 110%;

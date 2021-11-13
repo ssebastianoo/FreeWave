@@ -56,7 +56,8 @@ function updateCookie() {
             cookieQueue.push({
                 src: queue[i].audio.src,
                 currentTime: queue[i].audio.currentTime,
-                title: queue[i].element.innerText
+                title: queue[i].element.innerText,
+                url: queue[i].element.firstChild.href
             });
         };
         socket.emit('updateCookie', {
@@ -146,7 +147,7 @@ socket.on('cookie', function (cookie) {
         audio.controls = true;
 
         let element = document.createElement('li');
-        element.innerText = song.title;
+        element.innerHTML = `<a href='${song.url}' target='_blank'>${song.title}</a>`;
         queue.push({
             audio: audio,
             element: element
@@ -166,9 +167,8 @@ socket.on('cookie', function (cookie) {
 socket.on('queryResult', function (data) {
     loading.style.display = 'none';
     let li = document.createElement('li');
-    li.innerText = data.info.title;
+    li.innerHTML = `<a href='${data.info.link}' target='_blank'>${data.info.title}</a>`;
     queueDiv.appendChild(li);
-
     let audio = document.createElement('audio');
     audio.src = data.url;
     audio.controls = true;
@@ -180,4 +180,9 @@ socket.on('queryResult', function (data) {
     };
     updateCookie();
     query.value = '';
+});
+
+socket.on('notFound', function(songQuery) {
+    alert("couldn't find song " + songQuery);
+    loading.style.display = 'none';
 })
