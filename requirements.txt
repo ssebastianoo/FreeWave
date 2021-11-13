@@ -3,3 +3,6 @@ flask-socketio
 pafy
 youtube-search-python
 youtube-dl
+gunicorn
+eventlet==0.30.2
+gevent-websocket
